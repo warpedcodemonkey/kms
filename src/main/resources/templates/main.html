@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Instances List</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <table border="1" cellpadding="0" cellspacing="0">
+            <tr th:each="region : ${regionModel}">
+                <td valign="top" th:text="'Region: ' + ${region.regionName}"></td>
+                <td>
+                    <table border="1" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td colspan="7">Instances:</td>
+                        </tr>
+                        <tr>
+                            <td>Instance Name</td>
+                            <td>Instance Id</td>
+                            <td>AMI ID</td>
+                            <td>Instance Type</td>
+                            <td>Instance State</td>
+                            <td>Private IP</td>
+                            <td>Generate Key</td>
+                        </tr>
+                        <tr th:each="instance : ${region.instances}">
+                            <td th:text="${instance.instanceName}"></td>
+                            <td th:text="${instance.instanceId}"></td>
+                            <td th:text="${instance.amiId}"></td>
+                            <td th:text="${instance.instanceType}"></td>
+                            <td th:text="${instance.instanceState}"></td>
+                            <td th:text="${instance.privateIpAddress}"></td>
+                            <td><a th:if="${instance.privateIpAddress != null and instance.instanceState == 'running'}" th:href="@{'/generatekey/' + ${instance.instanceId}}">Generate Key</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
